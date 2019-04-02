@@ -82,13 +82,14 @@
       app.ticker.add(delta => gameLoop(delta));
     }
 
-    let oneDeg = 1 * pi / 180.0;
+    let speedFactor = 2.0;
+    let oneDeg = pi / 180.0;
 
     function gameLoop(delta) {
-      gear0.rotation += oneDeg;
-      gear1.rotation -= oneDeg / 2;
-      gear2.rotation += oneDeg / 2;
-      gear3.rotation -= oneDeg / 10;
+      gear0.rotation += speedFactor * oneDeg;
+      gear1.rotation -= speedFactor * oneDeg / 2;
+      gear2.rotation += speedFactor * oneDeg / 2;
+      gear3.rotation -= speedFactor * oneDeg / 10;
     }
 
   </script>
