@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+
+  <!-- <style>* {padding: 0; margin: 0}</style> -->
+
+</head>
+<script src="pixi.min.js"></script>
+
+<body>
+  <script type="text/javascript">
+    let Application = PIXI.Application,
+      loader = PIXI.loader,
+      resources = PIXI.loader.resources,
+      Sprite = PIXI.Sprite;
+
+    let app = new Application({
+      width: 1024,
+      height: 800
+    });
+
+    document.body.appendChild(app.view);
+
+    app.renderer.backgroundColor = 0x061639;
+
+    let gear0, gear1, gear2, gear3;
+    let pi = 3.141592;
+
+    loader
+      .add("gearpoly0.png")
+      .add("gearpoly1.png")
+      .add("gearpoly2.png")
+      .add("gearpoly3.png")
+      .load(setup);
+
+    function setup() {
+      gear0 = new Sprite(
+        PIXI.loader.resources["gearpoly0.png"].texture
+      );
+      gear1 = new Sprite(
+        PIXI.loader.resources["gearpoly1.png"].texture
+      );
+      gear2 = new Sprite(
+        PIXI.loader.resources["gearpoly2.png"].texture
+      );
+      gear3 = new Sprite(
+        PIXI.loader.resources["gearpoly3.png"].texture
+      );
+
+      app.stage.addChild(gear0);
+      app.stage.addChild(gear1);
+      app.stage.addChild(gear2);
+      app.stage.addChild(gear3);
+
+      gear0.x = 75 + gear0.width / 2;
+      gear0.y = 75 + gear0.height / 2;
+      gear0.anchor.x = 0.5;
+      gear0.anchor.y = 0.5;
+      gear0.rotation = 92.053 * pi / 180.0;
+
+      gear1.x = 125 + gear1.width / 2;;
+      gear1.y = 234.81 + gear1.width / 2;;
+      gear1.anchor.x = 0.5;
+      gear1.anchor.y = 0.5;
+      gear1.rotation = 227.053 * pi / 180.0;
+
+      gear2.x = 291 + gear2.width / 2;;
+      gear2.y = 400.81 + gear2.width / 2;;
+      gear2.anchor.x = 0.5;
+      gear2.anchor.y = 0.5;
+      gear2.rotation = 285.687 * pi / 180.0;
+
+      gear3.x = 391 + gear3.width / 2;;
+      gear3.y = 200.81 + gear3.width / 2;;
+      gear3.anchor.x = 0.5;
+      gear3.anchor.y = 0.5;
+      gear3.rotation = 123.832 * pi / 180.0;
+
+      app.ticker.add(delta => gameLoop(delta));
+    }
+
+    let oneDeg = 1 * pi / 180.0;
+
+    function gameLoop(delta) {
+      gear0.rotation += oneDeg;
+      gear1.rotation -= oneDeg / 2;
+      gear2.rotation += oneDeg / 2;
+      gear3.rotation -= oneDeg / 10;
+    }
+
+  </script>
+
+</body>
+
+</html>
