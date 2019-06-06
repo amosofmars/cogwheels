@@ -2,97 +2,177 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title>Hello World</title>
+    <meta charset="utf-8">
+    <title>Hello World</title>
 
-  <!-- <style>* {padding: 0; margin: 0}</style> -->
+    <!-- <style>* {padding: 0; margin: 0}</style> -->
 
 </head>
 <script src="pixi.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
 
 <body>
-  <script type="text/javascript">
+
+
+<p>
+    <textarea id="telegram-text" rows="15" cols="80">To Chalk Enthusiasts
+
+The Road to Affiliate has begun [STOP]
+Day 1 of 7
+
+Regards
+
+Hon Mr A Herald</textarea>
+<!--    <button onclick="test()">Hello</button>-->
+</p>
+
+
+<script type="text/javascript">
     let Application = PIXI.Application,
       loader = PIXI.loader,
       resources = PIXI.loader.resources,
       Sprite = PIXI.Sprite;
 
     let app = new Application({
-      width: 1024,
-      height: 800
+      width: 700,
+      height: 495
     });
 
     document.body.appendChild(app.view);
 
     app.renderer.backgroundColor = 0x0071b8;
 
-    let gear0, gear1, gear2, gear3;
-    let pi = 3.141592;
+window.WebFontConfig = {
+    google: {
+        families: ['Special Elite'],
+    },
+
+    active() {
+        init();
+    },
+};
+
+(function() {
+    const wf = document.createElement('script');
+    wf.src = `${document.location.protocol === 'https:' ? 'https' : 'http'
+    }://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js`;
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    const s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+}());
+
+function init() {
+    let background, basicText, dateText1, dateText2;
 
     loader
-      .add("gearpoly0.png")
-      .add("gearpoly1.png")
-      .add("gearpoly2.png")
-      .add("gearpoly3.png")
+      .add("telegram.jpg")
       .load(setup);
 
     function setup() {
-      gear0 = new Sprite(
-        PIXI.loader.resources["gearpoly0.png"].texture
-      );
-      gear1 = new Sprite(
-        PIXI.loader.resources["gearpoly1.png"].texture
-      );
-      gear2 = new Sprite(
-        PIXI.loader.resources["gearpoly2.png"].texture
-      );
-      gear3 = new Sprite(
-        PIXI.loader.resources["gearpoly3.png"].texture
+      background = new Sprite(
+        PIXI.loader.resources["telegram.jpg"].texture
       );
 
-      app.stage.addChild(gear0);
-      app.stage.addChild(gear1);
-      app.stage.addChild(gear2);
-      app.stage.addChild(gear3);
+      app.stage.addChild(background);
 
-      gear0.x = 75 + gear0.width / 2;
-      gear0.y = 75 + gear0.height / 2;
-      gear0.anchor.x = 0.5;
-      gear0.anchor.y = 0.5;
-      gear0.rotation = 92.053 * pi / 180.0;
+      background.x=0
+      background.y=0
 
-      gear1.x = 125 + gear1.width / 2;;
-      gear1.y = 234.81 + gear1.width / 2;;
-      gear1.anchor.x = 0.5;
-      gear1.anchor.y = 0.5;
-      gear1.rotation = 227.053 * pi / 180.0;
+      let font = "Courier";
 
-      gear2.x = 291 + gear2.width / 2;;
-      gear2.y = 400.81 + gear2.width / 2;;
-      gear2.anchor.x = 0.5;
-      gear2.anchor.y = 0.5;
-      gear2.rotation = 285.687 * pi / 180.0;
+      const style = new PIXI.TextStyle({
+          fontFamily: font,
+          fontSize: 22,
+          fontWeight: 'bold',
+          fill: "#27798f",
+          wordWrap: true,
+          wordWrapWidth: 600,
+      });
 
-      gear3.x = 391 + gear3.width / 2;;
-      gear3.y = 200.81 + gear3.width / 2;;
-      gear3.anchor.x = 0.5;
-      gear3.anchor.y = 0.5;
-      gear3.rotation = 123.832 * pi / 180.0;
+      let text = "To Chalk Enthusiasts\n\nThe Road to Affiliate has begun [STOP]\nDay 1 of 7\n\nRegards\n\nHon Mr A Herald";
+
+      basicText = new PIXI.Text(text, style);
+      basicText.x = 65;
+      basicText.y = 145;
+
+      app.stage.addChild(basicText);
+
+      let date = new Date();
+
+      dateText1 = new PIXI.Text(formatDate(date), new PIXI.TextStyle({
+          fontFamily: font,
+          fontSize: 16,
+          fill: "#000000",
+          wordWrap: true,
+          wordWrapWidth: 600,
+      }));
+      dateText1.x = 560;
+      dateText1.y = 145;
+
+      app.stage.addChild(dateText1);
+
+      dateText2 = new PIXI.Text("''" + (date.getFullYear()-2000), new PIXI.TextStyle({
+          fontFamily: font,
+          fontSize: 16,
+          fill: "#000000",
+          wordWrap: true,
+          wordWrapWidth: 600,
+      }));
+      dateText2.x = dateText1.x + dateText1.width;
+      dateText2.y = dateText1.y + dateText1.height/3;
+
+      app.stage.addChild(dateText2);
 
       app.ticker.add(delta => gameLoop(delta));
     }
 
-    let speedFactor = 1.5;
-    let oneDeg = pi / 180.0;
+    function test() {
+        var img = document.createElement('img');
+        img.src = app.renderer.plugins.extract.base64(app.stage);
 
-    function gameLoop(delta) {
-      gear0.rotation += speedFactor * oneDeg;
-      gear1.rotation -= speedFactor * oneDeg / 2;
-      gear2.rotation -= speedFactor * oneDeg / 2;
-      gear3.rotation += speedFactor * oneDeg / 10;
+        var div = document.createElement('div');
+        div.contentEditable = true;
+        div.appendChild(img);
+        document.body.appendChild(div);
+
+        // do copy
+        SelectText(div);
+        document.execCommand('Copy');
+        //document.body.removeChild(div);
     }
 
-  </script>
+function SelectText(element) {
+    var doc = document;
+    if (doc.body.createTextRange) {
+        var range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+    } else if (window.getSelection) {
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+}
+
+ function gameLoop(delta) {
+        let text = document.getElementById("telegram-text").value;
+        basicText.text = text;
+    }
+
+function formatDate(date) {
+  var monthNames = [
+    "JAN", "FEB", "MAR",
+    "APR", "MAY", "JUN", "JUL",
+    "AUG", "SEP", "OCT",
+    "NOV", "DEC"
+  ];
+  return monthNames[date.getMonth()] + " " + date.getDate();
+}
+}
+</script>
 
 </body>
 
