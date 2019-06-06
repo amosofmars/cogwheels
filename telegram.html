@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Telegram</title>
+</head>
+<script src="pixi.min.js"></script>
+
+<body>
+
+
+<p>
+    <textarea id="telegram-text" rows="15" cols="80" onkeyup="gameLoop(0)">To Chalk Enthusiasts
+
+The Road to Affiliate has begun [STOP]
+Day 1 of 7
+
+Regards
+
+Hon Mr A Herald</textarea>
+</p>
+
+
+<script type="text/javascript">
+    let Application = PIXI.Application,
+        loader = PIXI.loader,
+        resources = PIXI.loader.resources,
+        Sprite = PIXI.Sprite;
+
+    let app = new Application({
+        width: 700,
+        height: 495
+    });
+    app.ticker.autoStart = false;
+    app.renderer.backgroundColor = 0x0071b8;
+
+    document.body.appendChild(app.view);
+
+    let background, basicText, dateText1, dateText2;
+
+    loader
+    .add("telegram.jpg")
+    .load(setup);
+
+    function setup() {
+        background = new Sprite(
+            PIXI.loader.resources["telegram.jpg"].texture
+        );
+
+        app.stage.addChild(background);
+
+        background.x = 0;
+        background.y = 0;
+
+        let font = "Courier";
+
+        basicText = new PIXI.Text("", new PIXI.TextStyle({
+            fontFamily: font,
+            fontSize: 22,
+            fontWeight: 'bold',
+            fill: "#27798f",
+            wordWrap: true,
+            wordWrapWidth: 600,
+        }));
+        basicText.x = 65;
+        basicText.y = 145;
+
+        app.stage.addChild(basicText);
+
+        dateText1 = new PIXI.Text("", new PIXI.TextStyle({
+            fontFamily: font,
+            fontSize: 16,
+            fill: "#000000",
+            wordWrap: true,
+            wordWrapWidth: 600,
+        }));
+        dateText1.x = 560;
+        dateText1.y = 145;
+
+        app.stage.addChild(dateText1);
+
+        dateText2 = new PIXI.Text("", new PIXI.TextStyle({
+            fontFamily: font,
+            fontSize: 16,
+            fill: "#000000",
+            wordWrap: true,
+            wordWrapWidth: 600,
+        }));
+
+        app.stage.addChild(dateText2);
+
+        // app.ticker.add(delta => gameLoop(delta));
+        gameLoop(0);
+    }
+
+    function gameLoop(delta) {
+        basicText.text = document.getElementById("telegram-text").value;
+        let date = new Date();
+        dateText1.text = formatDate(date);
+        dateText2.text = "''" + (date.getFullYear() - 2000);
+        dateText2.x = dateText1.x + dateText1.width;
+        dateText2.y = dateText1.y + dateText1.height / 3;
+        app.render();
+    }
+
+    function formatDate(date) {
+        const monthNames = [
+            "JAN", "FEB", "MAR",
+            "APR", "MAY", "JUN",
+            "JUL", "AUG", "SEP",
+            "OCT", "NOV", "DEC"
+        ];
+        return monthNames[date.getMonth()] + " " + date.getDate();
+    }
+
+</script>
+
+</body>
+
+</html>
